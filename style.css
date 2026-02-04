@@ -1,4 +1,4 @@
-/* === GENEL AYARLAR (Tüm Kitaplar İçin Standart) === */
+/* === GENEL AYARLAR === */
 :root {
   --bg: #0f1113;
   --text: #e9e6df;
@@ -15,7 +15,7 @@ body {
   color: var(--text);
   font-family: var(--sans);
   line-height: 1.8;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Yatay taşmayı engelle */
 }
 
 /* 1. PAS RENGİ KAYDIRMA ÇUBUĞU */
@@ -31,8 +31,9 @@ body {
 /* Metin Seçimi */
 ::selection { background: var(--accent); color: var(--bg); }
 
+
 /* =============================================
-   1. GİRİŞ EKRANI (ÇİFT KATMANLI SİSTEM)
+   1. GİRİŞ EKRANI (ÇİFT KATMANLI - NET YAZI)
    =============================================
 */
 #intro-screen {
@@ -49,24 +50,24 @@ body {
   transition: opacity 1.5s ease-in-out, visibility 1.5s;
 }
 
-/* KATMAN 1: Arka Plan (Flu) */
+/* KATMAN 1: Arka Plan Resmi (Flu) */
 .intro-bg {
   position: absolute;
-  inset: -20px;
-  background-image: url('./cover.jpg'); /* Her klasördeki cover.jpg'yi alır */
+  inset: 0;
+  background-image: url('./cover.jpg'); /* Kitap kapağı */
   background-size: cover;
   background-position: center;
-  filter: blur(12px) brightness(0.3); 
+  filter: blur(8px) brightness(0.4); 
   transform: scale(1.1);
-  z-index: 1;
+  z-index: -1;
 }
 
 /* KATMAN 2: İçerik (Net) */
 .intro-content {
   position: relative;
-  z-index: 2;
+  z-index: 10001;
   padding: 2rem;
-  max-width: 800px;
+  max-width: 700px;
   animation: introFadeIn 1.5s ease;
 }
 
@@ -75,33 +76,33 @@ body {
   letter-spacing: 3px;
   text-transform: uppercase;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 15px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 10px;
 }
 
 .intro-title {
   font-family: var(--serif);
-  font-size: clamp(2.5rem, 6vw, 5rem); /* Uzun başlıklar için ayarlandı */
+  font-size: clamp(3rem, 8vw, 6rem);
   color: #fff;
   font-weight: 300;
-  line-height: 1.1;
+  line-height: 1;
   margin-bottom: 20px;
-  text-shadow: 0 5px 30px rgba(0,0,0,0.6);
+  text-shadow: 0 5px 30px rgba(0,0,0,0.5);
 }
 
 .intro-sub {
   font-family: var(--serif);
   font-size: 1.3rem;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   font-style: italic;
   margin-bottom: 40px;
 }
 
 /* Buton */
 #start-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.3);
   padding: 14px 40px;
   font-family: var(--sans);
   font-size: 0.9rem;
@@ -132,19 +133,20 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+
 /* =============================================
-   2. ANA SAYFA DÜZENİ
+   2. ANA SAYFA VE SAHNELER
    =============================================
 */
 
-/* Sayfa Arkası (Sabit Flu Kapak) */
+/* Sayfa Arka Planı (Sabit Flu Kapak) */
 .fixed-bg {
   position: fixed;
   inset: 0;
   background-image: url('./cover.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(15px) brightness(0.15); 
+  filter: blur(12px) brightness(0.2); 
   z-index: -1;
   transform: scale(1.1);
 }
@@ -154,7 +156,7 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.10;
+  opacity: 0.12;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
   z-index: 999;
@@ -164,24 +166,25 @@ body {
   max-width: 900px;
   margin: auto;
   padding: 0 1.5rem 10rem;
-  opacity: 0;
+  opacity: 0; /* Başlangıçta gizli */
   transition: opacity 1.5s ease;
 }
 
 .page.visible { opacity: 1; }
+
 .hero-spacer { height: 15vh; }
 
-/* ALINTI KUTULARI (AKAN YAPI) */
+/* ALINTI KUTULARI (SCENE FLOW) */
 .quote {
   max-width: 520px;
-  margin: 6rem 0;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.08);
+  margin: 8rem 0; /* Geniş boşluk */
+  background: rgba(255,255,255,0.03); /* Çok hafif cam efekti */
+  border: 1px solid rgba(255,255,255,0.1);
   padding: 30px;
   border-radius: 12px;
   backdrop-filter: blur(4px);
   
-  /* Animasyon */
+  /* Animasyon Başlangıcı */
   opacity: 0;
   transform: translateY(40px);
   transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -194,7 +197,7 @@ body {
 
 .quote p {
   font-family: var(--serif);
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   line-height: 1.6;
   color: #f0f0f0;
 }
@@ -202,35 +205,37 @@ body {
 .quote span {
   display: block;
   margin-top: 15px;
-  font-size: 0.75rem;
-  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--accent);
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-/* Konumlandırma */
+/* Konumlandırma Sınıfları */
 .q-left { margin-right: auto; text-align: left; border-left: 2px solid var(--accent); }
 .q-right { margin-left: auto; text-align: right; border-right: 2px solid var(--accent); }
 .q-center { 
-  margin: 5rem auto; 
+  margin: 6rem auto; 
   text-align: center; 
   max-width: 700px;
-  border: none;
+  border-top: 1px solid var(--accent);
   background: transparent;
+  border-left: none; border-right: none;
 }
-.q-center p { font-size: 1.6rem; font-style: italic; color: #fff; }
+.q-center p { font-size: 1.6rem; font-style: italic; }
 
+/* Ayıraç */
 .divider {
   text-align: center;
-  margin: 5rem 0;
+  margin: 6rem 0;
   color: var(--accent);
-  opacity: 0.3;
-  font-size: 1.5rem;
+  opacity: 0.4;
+  font-size: 2rem;
   font-family: var(--serif);
 }
 
-/* PDF Alanı */
+/* PDF İndirme Alanı */
 .reader-section {
   text-align: center;
   margin-top: 8rem;
@@ -271,12 +276,12 @@ body {
 .home-link { color: var(--muted); font-size: 0.9rem; transition: 0.3s; }
 .home-link:hover { color: var(--accent); }
 
-/* MOBİL FIX (EZİYET ÖNLEYİCİ) */
+/* MOBİL İÇİN ÖZEL AYARLAR (O eziyeti bitiren kod) */
 @media (max-width: 768px) {
   .page { padding: 0 1.2rem 4rem; }
   .quote { margin: 3rem 0; width: 100%; max-width: 100%; }
   .quote p { font-size: 1.2rem; }
-  .intro-title { font-size: 2.8rem; } /* Uzun başlıklar mobilde taşmasın */
+  .intro-title { font-size: 3.5rem; }
   .divider { margin: 3rem 0; }
   .q-left, .q-right { text-align: left; border-left: 2px solid var(--accent); border-right: none; }
 }
